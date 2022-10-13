@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "板块",
+  "usingComponents": {
+    "logined-card": "../../components/logined-card/logined-card",
+    "my-features-card": "../../components/my-features-card/my-features-card",
+    "more-features": "../../components/more-features/more-features"
+  }
+}

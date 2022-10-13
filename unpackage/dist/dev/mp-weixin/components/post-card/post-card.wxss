@@ -1,0 +1,160 @@
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.post-card-container {
+  box-sizing: border-box;
+  width: 680rpx;
+  background-color: #fff;
+  margin-bottom: 40rpx;
+  border-radius: 30rpx;
+  padding: 1rpx 17rpx 30rpx 25rpx;
+}
+.post-header {
+  position: relative;
+  top: -23rpx;
+  left: -20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.post-header .avatar {
+  box-sizing: border-box;
+  border: 18rpx solid #fff;
+  width: 115rpx;
+  height: 115rpx;
+  border-radius: 50%;
+}
+.post-header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.post-header-left text {
+  color: #96e8ba;
+  font-size: 35rpx;
+}
+.post-header-right {
+  font-size: 25rpx;
+  color: #8a8a8a;
+}
+.post-content {
+  width: 640rpx;
+  padding: 0 10rpx;
+  color: #3d3d3d;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  line-height: 50rpx;
+  font-size: 30rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  align-content: center;
+}
+.post-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 40rpx 0 30rpx;
+}
+.classic-label {
+  box-sizing: border-box;
+  padding: 5rpx 16rpx;
+  border-radius: 10rpx;
+  color: #87d0a7;
+  background-color: rgba(150, 232, 186, 0.3);
+  font-size: 25rpx;
+}
+.post-footer-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.post-footer-comment {
+  display: flex;
+  align-items: center;
+}
+.post-footer-like {
+  margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+}
+.comment-icon {
+  width: 40rpx;
+  height: 33rpx;
+}
+.like-icon {
+  width: 40rpx;
+  height: 37rpx;
+}
+.post-comment {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 590rpx;
+  height: 60rpx;
+  padding: 20rpx;
+  margin-top: 20rpx;
+  border-radius: 20rpx;
+  background-color: #f8f8f8;
+}
+.post-comment-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.avatar-container {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+}
+.post-comment-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+.post-comment-content {
+  width: 420rpx;
+  font-size: 26rpx;
+  color: #4b4b4b;
+  line-clamp: 2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.post-comment-like {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.post-comment-like-icon {
+  width: 40rpx;
+  height: 37rpx;
+}

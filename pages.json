@@ -1,0 +1,67 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/community/community",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "社区"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "板块"
+			}
+		},
+		{
+            "path" : "pages/post-details/post-details",
+            "style" :                                                                                    
+            {
+                "enablePullDownRefresh": false,
+				"navigationBarTitleText": "帖子详情"
+            }
+            
+        }
+        ,{
+            "path" : "pages/user-center/user-center",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人主页",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+       
+        ,{
+            "path" : "pages/msg-page/msg-page",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "消息中心",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {},
+	"tabBar": {
+		"color": "#333",
+		"list": [{
+			"pagePath": "pages/community/community",
+			"iconPath": "static/tabBarIcon/communityd.png",
+			"selectedIconPath": "static/tabBarIcon/communityl.png",
+			"text": "社区"
+		}, {
+			"pagePath": "pages/index/index",
+			"iconPath": "static/tabBarIcon/classicd.png",
+			"selectedIconPath": "static/tabBarIcon/classicl.png",
+			"text": "板块"
+		}]
+	}
+}

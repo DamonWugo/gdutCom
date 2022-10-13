@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/community/community",
+    "pages/index/index",
+    "pages/post-details/post-details",
+    "pages/user-center/user-center",
+    "pages/msg-page/msg-page"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#333",
+    "list": [
+      {
+        "pagePath": "pages/community/community",
+        "iconPath": "static/tabBarIcon/communityd.png",
+        "selectedIconPath": "static/tabBarIcon/communityl.png",
+        "text": "社区"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabBarIcon/classicd.png",
+        "selectedIconPath": "static/tabBarIcon/classicl.png",
+        "text": "板块"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

@@ -1,0 +1,7 @@
+{
+  "enablePullDownRefresh": false,
+  "navigationBarTitleText": "帖子详情",
+  "usingComponents": {
+    "comment-card": "../../components/comment-card/comment-card"
+  }
+}

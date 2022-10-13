@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "个人主页",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "my-info-card": "../../components/my-info-card/my-info-card",
+    "my-post-card": "../../components/my-post-card/my-post-card"
+  }
+}

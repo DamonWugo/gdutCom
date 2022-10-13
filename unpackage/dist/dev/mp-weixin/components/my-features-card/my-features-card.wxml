@@ -1,0 +1,1 @@
+<view class="features-container"><view wx:for="{{a}}" wx:for-item="tabItem" wx:key="c" class="my-post-container" bindtap="{{tabItem.d}}"><image src="{{tabItem.a}}" mode="" class="features-img"></image><text class="my-post-name">{{tabItem.b}}</text></view></view>
