@@ -3,10 +3,7 @@ var common_vendor = require("../../common/vendor.js");
 var store_index = require("../../store/index.js");
 const _sfc_main = {
   setup() {
-    let userInfoFromWeiXin = common_vendor.reactive({ userInfoFromWeiXin: null });
-    common_vendor.onBeforeMount(() => {
-      userInfoFromWeiXin.userInfoFromWeiXin = store_index.store.state.loginAbout.userInfo;
-    });
+    let userInfoFromWeiXin = common_vendor.reactive({ userInfoFromWeiXin: store_index.store.state.loginAbout.userInfo });
     return {
       userInfoFromWeiXin
     };

@@ -1,14 +1,12 @@
 <template>
 	<view>
-		
+		发帖页面
 	</view>
 </template>
 
 <script>
 	export default {
-		setup(){
-			
-		}
+		
 	}
 </script>
 

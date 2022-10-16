@@ -4,7 +4,8 @@
     "pages/index/index",
     "pages/post-details/post-details",
     "pages/user-center/user-center",
-    "pages/msg-page/msg-page"
+    "pages/msg-page/msg-page",
+    "pages/publish-page/publish-page"
   ],
   "window": {
     "navigationBarTextStyle": "black",

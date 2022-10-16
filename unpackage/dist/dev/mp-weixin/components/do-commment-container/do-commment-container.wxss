@@ -23,63 +23,62 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.scroll-view-community-bar {
-  white-space: nowrap;
-  width: 100%;
+.do-commment-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 30rpx;
+  background-color: #fff;
+  width: 750rpx;
 }
-.tab-bar-for-flex {
+.header-container {
   display: flex;
   flex-direction: row;
-}
-.tab-container {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 150rpx;
-  height: 200rpx;
-  margin: 0 20rpx;
-}
-.tab-icon {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-  padding: 10rpx;
-  background-color: #fff;
-  border: 5rpx solid #fff;
-}
-.tab-name {
-  font-size: 25rpx;
-  color: #757575;
-  margin-top: 10rpx;
-}
-.active-tab {
-  border: 5rpx solid #96e8ba;
-}
-.active-tab-name {
+  margin-bottom: 20rpx;
   color: #96e8ba;
+  font-size: 28rpx;
 }
-.post-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 750rpx;
-  margin-top: 30rpx;
-}
-.publish-post {
-  position: fixed;
-  bottom: 60rpx;
-  right: 80rpx;
-  width: 100rpx;
-  height: 100rpx;
+.avatar-container {
+  width: 70rpx;
+  height: 70rpx;
   border-radius: 50%;
-  background-color: #96e8ba;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0rpx 0rpx 20rpx 5rpx rgba(97, 153, 121, 0.3);
+  margin-right: 20rpx;
 }
-.plus-icon {
-  width: 40rpx;
-  height: 40rpx;
+.avatar-icon {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+}
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+}
+.textarea-container {
+  box-sizing: border-box;
+  width: 540rpx;
+  padding: 10rpx 20rpx;
+  border-radius: 13rpx;
+  background-color: #f6f6f6;
+}
+.text-area {
+  font-size: 30rpx;
+  line-height: 50rpx;
+  height: 100rpx;
+  width: 520rpx;
+}
+.btn-container {
+  width: 200rpx;
+}
+.btn {
+  color: #fff;
+  font-weight: 700;
+  background-color: #75e89c;
+  margin: 0 10rpx 0 10rpx;
+}
+.key-word-container {
+  background-color: #fff;
+  width: 100%;
 }

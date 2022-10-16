@@ -2,6 +2,7 @@
   "enablePullDownRefresh": false,
   "navigationBarTitleText": "帖子详情",
   "usingComponents": {
-    "comment-card": "../../components/comment-card/comment-card"
+    "comment-card": "../../components/comment-card/comment-card",
+    "do-commment-container": "../../components/do-commment-container/do-commment-container"
   }
 }

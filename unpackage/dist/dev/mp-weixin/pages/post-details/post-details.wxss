@@ -139,3 +139,12 @@
   align-items: center;
   justify-content: center;
 }
+.comment-and-mask-container {
+  position: fixed;
+  bottom: 0;
+}
+.mask {
+  width: 750rpx;
+  height: 100%;
+  background-color: rgba(25, 25, 26, 0.5);
+}

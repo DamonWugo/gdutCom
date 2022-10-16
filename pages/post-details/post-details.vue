@@ -17,7 +17,7 @@
 				</view>
 			</view>
 			<view class="post-details-footer">
-				<view class="details-comment">
+				<view class="details-comment" @click="showDoComment">
 					评论点有见解的...
 				</view>
 				<view class="details-share">
@@ -46,17 +46,30 @@
 				<comment-card></comment-card>
 				<comment-card></comment-card>
 				<comment-card></comment-card>
-				
+
 			</view>
 		</view>
+		<!-- <do-commment-container
+			class="do-commment"
+			:style="isShowComment == true ? 'display: block' : 'display: none'"
+			:isAutoFocus = "isAutoFocus"
+		></do-commment-container> -->
+		<view class="comment-and-mask-container" v-if="isShowComment">
+			<view class="mask" @click="clearMask" :style="{ height:  3000 + 'rpx'}" >
+				sdsd
+			</view>
+			<do-commment-container class="do-commment" :isAutoFocus="isAutoFocus" @closeMask="clearMask" ></do-commment-container>
+		</view>
+
 	</view>
 
 </template>
 
 <script>
 	import {
+		onMounted,
 		reactive,
-		ref
+		ref,
 	} from "vue"
 	export default {
 		setup() {
@@ -67,24 +80,49 @@
 				id: '1',
 				tabName: '最热'
 			}]);
+
 			let navIndex = ref("0");
+			let isShowComment = ref(false)
+			let isAutoFocus = ref(false)
+			let maskHeight = ref(30)
+			
+		
 
 			function changeCommentChannel(tabId) {
 				navIndex.value = tabId
 			}
+
+			function showDoComment() {
+				isShowComment.value = true
+				isAutoFocus.value = true
+				// isShowComment.value = true
+				uni.getSystemInfo({
+					success: (res) => {
+						maskHeight.value = res.screenHeight * 10
+					}
+				})
+			}
+
+			function clearMask() {
+				isShowComment.value = false
+				isAutoFocus.value = false
+			}
 			return {
 				navList,
 				navIndex,
-				changeCommentChannel
+				changeCommentChannel,
+				showDoComment,
+				isShowComment,
+				isAutoFocus,
+				clearMask,
+				maskHeight
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.post-details-container {
-		// background-color: #f6f6f6;
-	}
+	.post-details-container {}
 
 
 
@@ -151,7 +189,7 @@
 		box-shadow: 5rpx 5rpx 10rpx 3rpx rgba(75, 116, 93, 0.3);
 	}
 
-	
+
 
 	.post-details-footer {
 		display: flex;
@@ -192,9 +230,10 @@
 	.details-like-icon {
 		width: 55rpx;
 		height: 55rpx;
-		
+
 	}
-	.comment-container{
+
+	.comment-container {
 		background-color: #fff;
 	}
 
@@ -220,10 +259,29 @@
 		// font-weight: 700;
 		font-size: 40rpx;
 	}
-	.no-comment-container{
+
+	.no-comment-container {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.do-commment {
+		// display: none;
+		// position: fixed;
+		// bottom: 0;
+		// height: 900rpx;
+	}
+
+	.comment-and-mask-container {
+		position: fixed;
+		bottom: 0;
+	}
+
+	.mask {
+		width: 750rpx;
+		height: 100%;
+		background-color: rgba(25, 25, 26, 0.5);
 	}
 </style>

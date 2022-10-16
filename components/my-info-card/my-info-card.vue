@@ -24,10 +24,10 @@
 	import store from '../../store/index.js'
 	export default {
 		setup(){
-			let userInfoFromWeiXin = reactive({userInfoFromWeiXin:null})
-			onBeforeMount(()=>{
-				userInfoFromWeiXin.userInfoFromWeiXin=store.state.loginAbout.userInfo
-			})
+			let userInfoFromWeiXin = reactive({userInfoFromWeiXin:store.state.loginAbout.userInfo})
+			// onBeforeMount(()=>{
+			// 	userInfoFromWeiXin.userInfoFromWeiXin=store.state.loginAbout.userInfo
+			// })
 			return {
 				userInfoFromWeiXin
 			}

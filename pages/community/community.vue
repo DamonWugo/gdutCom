@@ -16,8 +16,9 @@
 		</view>
 		<view class="post-container">
 			<post-card v-for="item in 10"></post-card>
-			
-
+		</view>
+		<view class="publish-post" @click="goPublish">
+			<image src="../../static/plus.png" mode="" class="plus-icon"></image>
 		</view>
 	</view>
 
@@ -91,11 +92,17 @@
 			function changeToChannel(tabItemId) {
 				tabIndex.value = tabItemId
 			}
-
+			// 发布帖子
+			function goPublish() {
+				uni.navigateTo({
+					url:'/pages/publish-page/publish-page'
+				})
+			}
 			return {
 				tabList,
 				changeToChannel,
-				tabIndex
+				tabIndex,
+				goPublish
 			}
 		}
 	}
@@ -155,5 +162,22 @@
 		align-items: center;
 		width: 750rpx;
 		margin-top: 30rpx;
+	}
+	.publish-post{
+		position: fixed;
+		bottom: 60rpx;
+		right: 80rpx;
+		width: 100rpx;
+		height: 100rpx;
+		border-radius: 50%;
+		background-color: #96e8ba;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0rpx 0rpx 20rpx 5rpx rgba(97, 153, 121, 0.3);
+	}
+	.plus-icon{
+		width: 40rpx;
+		height: 40rpx;
 	}
 </style>

@@ -21,10 +21,10 @@ const loginAbout = {
   },
   getters: {},
 };
+
 const store = createStore({
   modules: {
-    loginAbout, //注册模块
-   
+    loginAbout, //登录模块
   },
 });
 
