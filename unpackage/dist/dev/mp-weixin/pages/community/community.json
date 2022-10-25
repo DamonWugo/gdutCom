@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "社区",
   "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50,
   "usingComponents": {
     "post-card": "../../components/post-card/post-card"
   }

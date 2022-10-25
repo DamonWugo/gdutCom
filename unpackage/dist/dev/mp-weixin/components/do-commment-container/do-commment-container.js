@@ -8,10 +8,6 @@ const _sfc_main = {
     let isBtnDisabled = common_vendor.ref(true);
     let commentVal = common_vendor.ref("");
     const { userInfo } = store_index.store.state.loginAbout;
-    common_vendor.watch(commentVal, (p, n) => {
-      console.log(p);
-      console.log(n);
-    });
     common_vendor.onMounted(() => {
       common_vendor.index.onKeyboardHeightChange((res) => {
         keyWordHeight.value = res.height * 2;
@@ -19,7 +15,7 @@ const _sfc_main = {
       });
     });
     function sendComment() {
-      context.emit("closeMask");
+      context.emit("closeMask", commentVal.value);
     }
     return {
       keyWordHeight,

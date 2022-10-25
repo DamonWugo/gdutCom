@@ -73,7 +73,7 @@
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
-  background-color: #96e8ba;
+  background-color: #4bc99a;
   display: flex;
   align-items: center;
   justify-content: center;

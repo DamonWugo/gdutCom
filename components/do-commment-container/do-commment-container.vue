@@ -19,6 +19,7 @@
 						placeholder-style="font-size:30rpx;"
 						fixed="true"
 						v-model="commentVal" 
+						:maxlength="150"
 						></textarea>
 				</view>
 				<view class="btn-container" @click="sendComment">
@@ -49,10 +50,10 @@
 			let commentVal = ref('')
 			const { userInfo } = store.state.loginAbout
 			
-			watch(commentVal, (p, n)=>{
-				console.log(p)
-				console.log(n)
-			})
+			// watch(commentVal, (p, n)=>{
+			// 	console.log(p)
+			// 	console.log(n)
+			// })
 			onMounted(()=>{
 				uni.onKeyboardHeightChange(res => {
 				  keyWordHeight.value = res.height * 2
@@ -62,7 +63,7 @@
 			
 			//自定义事件，子传父
 			function sendComment(){
-				context.emit("closeMask")
+				context.emit("closeMask", commentVal.value)
 			}
 			return{
 				keyWordHeight,

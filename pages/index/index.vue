@@ -17,9 +17,13 @@
 		setup() {
 			let userInfo = reactive({userInfo:null});
 			let isLogined = ref(false);
-			onBeforeMount(()=>{				
+			onMounted(()=>{		
 				isLogined.value = store.state.loginAbout.isLogined
-				userInfo.userInfo = JSON.parse(uni.getStorageSync('userInfo')) == null ? null : JSON.parse(uni.getStorageSync('userInfo'))
+				if(uni.getStorageSync('userInfo') === ''){
+					userInfo.userInfo = null
+				}else{
+					userInfo.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+				}
 			})
 			
 			return {

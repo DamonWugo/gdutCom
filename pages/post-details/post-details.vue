@@ -4,12 +4,18 @@
 			<view class="post-details-header">
 				<view class="post-details-header-left">
 					<image src="../../static/avatar/touxiang-12.png" mode="" class="avatar"></image>
-					<text>用户名</text>
+					<text>{{postDetail.postDetail[0].title.substring(0,3)}}</text>
 				</view>
-				<text class="post-details-header-right">23分钟前</text>
+				<text class="post-details-header-right">{{postDetail.postDetail[0].ctime}}</text>
 			</view>
 			<view class="post-details-content">
-				<text>想问一下我们的这个小程序的字体好看吗？如果有觉得好看的帮忙点个赞，我最后看看多少人点赞</text>
+				<view class="text-content">
+					<text>{{postDetail.postDetail[0].description}}</text>
+					<!-- <text>啥啊这是</text> -->
+				</view>
+				<view class="pic-content" @click.stop="previewPic(postDetail.postDetail[0].picUrl)">
+					<image :src="postDetail.postDetail[0].picUrl" mode="widthFix" class="post-content-pic"></image>
+				</view>
 			</view>
 			<view class="post-details-label">
 				<view class="classic-details-label">
@@ -25,7 +31,7 @@
 				</view>
 				<view class="details-like">
 					<image src="../../static/postIcon/liked.png" mode="" class="details-like-icon"></image>
-					<text>&nbsp;22</text>
+					<text>&nbsp;42w+</text>
 				</view>
 			</view>
 		</view>
@@ -37,15 +43,15 @@
 				</view>
 			</view>
 			<view class="comment-container">
-				<!-- <view class="no-comment-container">
+				<view class="no-comment-container">
 					<no-comment></no-comment>
-				</view> -->
+				</view>
+				<!-- <comment-card></comment-card>
 				<comment-card></comment-card>
 				<comment-card></comment-card>
 				<comment-card></comment-card>
 				<comment-card></comment-card>
-				<comment-card></comment-card>
-				<comment-card></comment-card>
+				<comment-card></comment-card> -->
 
 			</view>
 		</view>
@@ -71,6 +77,9 @@
 		reactive,
 		ref,
 	} from "vue"
+	import { onLoad } from '@dcloudio/uni-app';
+	//api
+	import getPosts from '../../service/getPosts.js'
 	export default {
 		setup() {
 			let navList = reactive([{
@@ -86,7 +95,31 @@
 			let isAutoFocus = ref(false)
 			let maskHeight = ref(30)
 			
-		
+			let postDetail = reactive({postDetail:{}})
+			
+			let commentList = reactive({commentList:[]})
+			onLoad((option)=>{
+				console.log('option',option.id);
+				getPosts().then((res)=>{
+					postDetail.postDetail = res.data.newslist.filter(item => {
+						return item.id == option.id
+					})
+					console.log(postDetail.postDetail);
+					console.log(res.data.newslist[0]);
+					console.log(res.data.newslist.filter(item => {
+						return item.id == option.id
+					}));
+				})
+			})
+			onMounted(()=>{
+				
+			})
+			function previewPic(img){
+				uni.previewImage({
+					urls:[img],
+					current:0
+				})
+			}
 
 			function changeCommentChannel(tabId) {
 				navIndex.value = tabId
@@ -103,7 +136,9 @@
 				})
 			}
 
-			function clearMask() {
+			function clearMask(commentVal) {
+				console.log('commentVal',commentVal);
+				// commentList.commentList.unshift({commentVal: commentVal, name: getsto})
 				isShowComment.value = false
 				isAutoFocus.value = false
 			}
@@ -115,7 +150,10 @@
 				isShowComment,
 				isAutoFocus,
 				clearMask,
-				maskHeight
+				maskHeight,
+				postDetail,
+				previewPic,
+				commentList
 			}
 		}
 	}
@@ -172,6 +210,10 @@
 		font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 		line-height: 50rpx;
 		font-size: 33rpx;
+	}
+	.pic-content{
+		margin: 30rpx 0 20rpx;
+		
 	}
 
 	.post-details-label {
@@ -235,6 +277,7 @@
 
 	.comment-container {
 		background-color: #fff;
+		height: 1000rpx;
 	}
 
 	.details-comment-nav {

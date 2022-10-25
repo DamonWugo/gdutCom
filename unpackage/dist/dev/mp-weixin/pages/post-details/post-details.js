@@ -1,5 +1,7 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
+var service_getPosts = require("../../service/getPosts.js");
+require("../../store/index.js");
 const _sfc_main = {
   setup() {
     let navList = common_vendor.reactive([{
@@ -13,6 +15,29 @@ const _sfc_main = {
     let isShowComment = common_vendor.ref(false);
     let isAutoFocus = common_vendor.ref(false);
     let maskHeight = common_vendor.ref(30);
+    let postDetail = common_vendor.reactive({ postDetail: {} });
+    let commentList = common_vendor.reactive({ commentList: [] });
+    common_vendor.onLoad((option) => {
+      console.log("option", option.id);
+      service_getPosts.getPosts().then((res) => {
+        postDetail.postDetail = res.data.newslist.filter((item) => {
+          return item.id == option.id;
+        });
+        console.log(postDetail.postDetail);
+        console.log(res.data.newslist[0]);
+        console.log(res.data.newslist.filter((item) => {
+          return item.id == option.id;
+        }));
+      });
+    });
+    common_vendor.onMounted(() => {
+    });
+    function previewPic(img) {
+      common_vendor.index.previewImage({
+        urls: [img],
+        current: 0
+      });
+    }
     function changeCommentChannel(tabId) {
       navIndex.value = tabId;
     }
@@ -25,7 +50,8 @@ const _sfc_main = {
         }
       });
     }
-    function clearMask() {
+    function clearMask(commentVal) {
+      console.log("commentVal", commentVal);
       isShowComment.value = false;
       isAutoFocus.value = false;
     }
@@ -37,24 +63,32 @@ const _sfc_main = {
       isShowComment,
       isAutoFocus,
       clearMask,
-      maskHeight
+      maskHeight,
+      postDetail,
+      previewPic,
+      commentList
     };
   }
 };
 if (!Array) {
-  const _easycom_comment_card2 = common_vendor.resolveComponent("comment-card");
+  const _easycom_no_comment2 = common_vendor.resolveComponent("no-comment");
   const _easycom_do_commment_container2 = common_vendor.resolveComponent("do-commment-container");
-  (_easycom_comment_card2 + _easycom_do_commment_container2)();
+  (_easycom_no_comment2 + _easycom_do_commment_container2)();
 }
-const _easycom_comment_card = () => "../../components/comment-card/comment-card.js";
+const _easycom_no_comment = () => "../../components/no-comment/no-comment.js";
 const _easycom_do_commment_container = () => "../../components/do-commment-container/do-commment-container.js";
 if (!Math) {
-  (_easycom_comment_card + _easycom_do_commment_container)();
+  (_easycom_no_comment + _easycom_do_commment_container)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_vendor.o((...args) => $setup.showDoComment && $setup.showDoComment(...args)),
-    b: common_vendor.f($setup.navList, (tabItem, k0, i0) => {
+    a: common_vendor.t($setup.postDetail.postDetail[0].title.substring(0, 3)),
+    b: common_vendor.t($setup.postDetail.postDetail[0].ctime),
+    c: common_vendor.t($setup.postDetail.postDetail[0].description),
+    d: $setup.postDetail.postDetail[0].picUrl,
+    e: common_vendor.o(($event) => $setup.previewPic($setup.postDetail.postDetail[0].picUrl)),
+    f: common_vendor.o((...args) => $setup.showDoComment && $setup.showDoComment(...args)),
+    g: common_vendor.f($setup.navList, (tabItem, k0, i0) => {
       return {
         a: common_vendor.t(tabItem.tabName),
         b: tabItem.id,
@@ -62,12 +96,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         d: common_vendor.n($setup.navIndex == tabItem.id ? "active" : "")
       };
     }),
-    c: $setup.isShowComment
+    h: $setup.isShowComment
   }, $setup.isShowComment ? {
-    d: common_vendor.o((...args) => $setup.clearMask && $setup.clearMask(...args)),
-    e: 3e3 + "rpx",
-    f: common_vendor.o($setup.clearMask),
-    g: common_vendor.p({
+    i: common_vendor.o((...args) => $setup.clearMask && $setup.clearMask(...args)),
+    j: 3e3 + "rpx",
+    k: common_vendor.o($setup.clearMask),
+    l: common_vendor.p({
       isAutoFocus: $setup.isAutoFocus
     })
   } : {});

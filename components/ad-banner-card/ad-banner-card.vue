@@ -1,21 +1,16 @@
 <template>
-	<view class="post-card-container" @click="goToPostDetailPage(postItem.id)">
+	<view class="post-card-container" @click="goToPostDetailPage">
 		<view class="post-header">
 			<view class="post-header-left">
 				<image src="../../static/avatar/defultavatar.png" mode="" class="avatar"></image>
-				<text>{{postItem.title.substring(0,3)}}</text>
-				<!-- <text>用户名</text> -->
+				<!-- <text>{{postItem.source}}</text> -->
+				<text>用户名</text>
 			</view>
 			<text class="post-header-right">23分钟前</text>
 		</view>
 		<view class="post-content">
-			<view class="text-content">
-				<text>{{postItem.description}}</text>
-				<!-- <text>啥啊这是</text> -->
-			</view>
-			<view class="pic-content" >
-				<image @click.stop="previewPic(postItem.picUrl)" :src="postItem.picUrl" mode="widthFix" class="post-content-pic"></image>
-			</view>
+			<!-- <ad unit-id="adunit-41156f2999eeab5c"></ad> -->
+			<text>啥啊这是</text>
 		</view>
 		<view class="post-footer">
 			<view class="classic-label">
@@ -26,14 +21,14 @@
 					<image src="../../static/postIcon/commentd.png" mode="" class="comment-icon"></image>
 					<text style="color: #96e8ba; font-size: 25rpx;">&nbsp;</text>
 				</view>
-				<view class="post-footer-like" @click.stop="doLike">
-					<image :src="isLiked ? noLiked : liked" mode="" class="like-icon"></image>
-					<text :style="{color: isLiked ? '#96e8ba' : '#a0a0a0'}">&nbsp;{{likedNum == 0? '' : likedNum}}</text>
+				<view class="post-footer-like">
+					<image src="../../static/postIcon/liked.png" mode="" class="like-icon"></image>
+					<text style="color: #96e8ba; font-size: 25rpx;">&nbsp;</text>
 				</view>
 			</view>
-
+	
 		</view>
-		<view class="post-comment" v-if="postItem.name">
+		<view class="post-comment">
 			<view class="post-comment-left">
 				<view class="avatar-container">
 					<image src="../../static/avatar/defultavatar.png" mode="" class="post-comment-avatar"></image>
@@ -42,7 +37,7 @@
 					我还是的房价还是到付即可士大夫艰苦是否健康
 				</view>
 			</view>
-
+	
 			<view class="post-comment-like">
 				<image src="../../static/postIcon/liked.png" mode="" class="post-comment-like-icon"></image>
 				<text style="color: #96e8ba; font-size: 25rpx;">&nbsp;1</text>
@@ -52,51 +47,13 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue"
 	export default {
-		props:["postItem"],
-		setup(props) {
-			let isLiked = ref(false)
-			let liked = ref('../../static/postIcon/liked.png')
-			let noLiked = ref('../../static/postIcon/likel.png')
-			let likedNum = ref(parseInt(Math.random()*100))
-			onMounted(()=>{
-				console.log(',2222',props.postItem);
-			})
-			function goToPostDetailPage(id) {
-				uni.navigateTo({
-					url: `/pages/post-details/post-details?id=${id}`
-				})
-			}
-			function previewPic(img){
-				uni.previewImage({
-					urls:[img],
-					current:0
-				})
-			}
-			function doLike(){
-				isLiked.value = !isLiked.value
-				if(isLiked.value){
-					likedNum.value++
-				}else{
-					likedNum.value--
-				}
-			}
-			return {
-				isLiked,
-				liked,
-				noLiked,
-				likedNum,
-				previewPic,
-				goToPostDetailPage,
-				doLike
-			}
-		}
+		
 	}
 </script>
 
 <style lang="scss">
-	.post-card-container {
+.post-card-container {
 		box-sizing: border-box;
 		width: 680rpx;
 		background-color: #fff;
@@ -140,12 +97,8 @@ import { onMounted, ref } from "vue"
 	}
 
 	.post-content {
-		width: 630rpx;
+		width: 640rpx;
 		padding: 0 10rpx;
-		
-
-	}
-	.text-content{
 		color: #3d3d3d;
 		font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 		line-height: 50rpx;
@@ -157,14 +110,7 @@ import { onMounted, ref } from "vue"
 		-webkit-line-clamp: 5;
 		-webkit-box-orient: vertical;
 		align-content: center;
-	}
-	.pic-content{
-		margin: 30rpx 0 20rpx;
-	}
-	.post-content-pic{
-		border-radius: 10rpx;
-		width: 410rpx;
-		height: 300rpx;
+
 	}
 
 
@@ -201,17 +147,16 @@ import { onMounted, ref } from "vue"
 		margin-left: 30rpx;
 		display: flex;
 		align-items: center;
-		font-size: 25rpx;
 	}
 
 	.comment-icon {
-		width: 50rpx;
-		height: 38rpx;
+		width: 40rpx;
+		height: 33rpx;
 	}
 
 	.like-icon {
-		width: 55rpx;
-		height: 50rpx;
+		width: 40rpx;
+		height: 37rpx;
 	}
 
 	.post-comment {
@@ -267,5 +212,4 @@ import { onMounted, ref } from "vue"
 		width: 40rpx;
 		height: 37rpx;
 	}
-	
 </style>

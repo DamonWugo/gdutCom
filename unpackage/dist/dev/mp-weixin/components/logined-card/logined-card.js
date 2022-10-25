@@ -3,12 +3,12 @@ var common_vendor = require("../../common/vendor.js");
 var store_index = require("../../store/index.js");
 const _sfc_main = {
   setup() {
-    let userInfo = common_vendor.ref("");
+    let userInfo = common_vendor.reactive({ userInfo: {} });
     let defaultAvatar = common_vendor.ref("../../static/avatar/defultavatar.png");
     let isLogined = common_vendor.ref(store_index.store.state.loginAbout.isLogined);
     let loginOrNot = common_vendor.ref("false");
-    common_vendor.onBeforeMount(() => {
-      userInfo.value = store_index.store.state.loginAbout.userInfo == null ? defaultAvatar.value : store_index.store.state.loginAbout.userInfo;
+    common_vendor.onMounted(() => {
+      userInfo.userInfo = store_index.store.state.loginAbout.userInfo == null ? defaultAvatar.value : store_index.store.state.loginAbout.userInfo;
       loginOrNot.value = isLogined.value;
     });
     function goUserCenter() {
@@ -29,6 +29,7 @@ const _sfc_main = {
             success: (res2) => {
               console.log("\u767B\u5F55", res2);
               isLogined.value = true;
+              store_index.store.dispatch("loginAbout/changeLoginStatus", true);
               if (res2.errMsg == "login:ok") {
                 res2.code;
               }
@@ -57,7 +58,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: $setup.isLogined
   }, $setup.isLogined ? {
-    b: common_vendor.t($setup.userInfo.nickName)
+    b: common_vendor.t($setup.userInfo.userInfo.nickName)
   } : {
     c: common_vendor.o((...args) => $setup.login && $setup.login(...args))
   }, {
@@ -65,7 +66,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $setup.isLogined ? {} : {}, {
     e: $setup.isLogined
   }, $setup.isLogined ? {
-    f: $setup.userInfo.avatarUrl,
+    f: $setup.userInfo.userInfo.avatarUrl,
     g: common_vendor.o((...args) => $setup.goUserCenter && $setup.goUserCenter(...args))
   } : {
     h: $setup.defaultAvatar

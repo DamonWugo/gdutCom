@@ -61,8 +61,10 @@
   color: #8a8a8a;
 }
 .post-content {
-  width: 640rpx;
+  width: 630rpx;
   padding: 0 10rpx;
+}
+.text-content {
   color: #3d3d3d;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   line-height: 50rpx;
@@ -74,6 +76,14 @@
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   align-content: center;
+}
+.pic-content {
+  margin: 30rpx 0 20rpx;
+}
+.post-content-pic {
+  border-radius: 10rpx;
+  width: 410rpx;
+  height: 300rpx;
 }
 .post-footer {
   display: flex;
@@ -104,14 +114,15 @@
   margin-left: 30rpx;
   display: flex;
   align-items: center;
+  font-size: 25rpx;
 }
 .comment-icon {
-  width: 40rpx;
-  height: 33rpx;
+  width: 50rpx;
+  height: 38rpx;
 }
 .like-icon {
-  width: 40rpx;
-  height: 37rpx;
+  width: 55rpx;
+  height: 50rpx;
 }
 .post-comment {
   display: flex;

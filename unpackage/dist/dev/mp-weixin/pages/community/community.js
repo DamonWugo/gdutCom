@@ -1,6 +1,7 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
 var store_index = require("../../store/index.js");
+var service_getPosts = require("../../service/getPosts.js");
 const _sfc_main = {
   setup() {
     let tabIndex = common_vendor.ref("001");
@@ -46,23 +47,67 @@ const _sfc_main = {
         tabIcon: "../../static/iconAll/searchl.png"
       }
     ]);
-    let userInfo = common_vendor.reactive({ userInfo: {} });
-    common_vendor.onBeforeMount(() => {
+    let userInfo = common_vendor.reactive({
+      userInfo: {}
+    });
+    let postsList = common_vendor.reactive({ postsList: [] });
+    let isLoading = common_vendor.ref(false);
+    common_vendor.onMounted(() => {
       common_vendor.index.checkSession({
         success: (res) => {
           console.log("res", res);
           if (!common_vendor.index.getStorageSync("userInfo")) {
-            store_index.store.state.loginAbout.isLogined = false;
+            store_index.store.dispatch("loginAbout/changeLoginStatus", false);
           } else {
-            store_index.store.state.loginAbout.isLogined = true;
+            store_index.store.dispatch("loginAbout/changeLoginStatus", true);
             userInfo.userInfo = JSON.parse(common_vendor.index.getStorageSync("userInfo"));
-            store_index.store.state.loginAbout.userInfo = userInfo.userInfo;
+            console.log("userInfo.userInfo", userInfo.userInfo);
+            store_index.store.dispatch("loginAbout/savaUserInfo", userInfo.userInfo);
           }
         },
         fail: (res) => {
-          store_index.store.state.loginAbout.isLogined = false;
+          store_index.store.dispatch("loginAbout/changeLoginStatus", false);
         }
       });
+      console.log(common_vendor.index.getStorageSync("userInfo1") === "");
+      common_vendor.index.showLoading({
+        title: "\u52A0\u8F7D\u4E2D"
+      });
+      service_getPosts.getPosts().then((res) => {
+        if (res.statusCode === 200) {
+          store_index.store.dispatch("postsAbout/savePostsList", res.data);
+          postsList.postsList = res.data;
+          console.log("postsList112222", postsList.postsList);
+          common_vendor.index.hideLoading();
+        }
+      }).catch((err) => {
+        console.log("\u8BF7\u6C42\u5E16\u5B50err", err);
+      });
+    });
+    function getPostList() {
+      isLoading.value = true;
+      setTimeout(() => {
+        service_getPosts.getPosts().then((res) => {
+          if (res.statusCode === 200) {
+            postsList.postsList.newslist = postsList.postsList.newslist.concat(res.data.newslist);
+            isLoading.value = false;
+            console.log("postsList11", postsList.postsList.newslist);
+          }
+        }).catch((err) => {
+          console.log("\u8BF7\u6C42\u5E16\u5B50err", err);
+        });
+      }, 1e3);
+    }
+    common_vendor.onReachBottom(() => {
+      console.log("\u89E6\u5E95\u4E86");
+      getPostList();
+    });
+    common_vendor.onShareAppMessage((res) => {
+      return {
+        title: "\u6211\u53BB",
+        imageUrl: "../../status/avatar/defultavatar.png",
+        path: "/pages/community/community"
+      };
     });
     function changeToChannel(tabItemId) {
       tabIndex.value = tabItemId;
@@ -76,7 +121,10 @@ const _sfc_main = {
       tabList,
       changeToChannel,
       tabIndex,
-      goPublish
+      goPublish,
+      postsList,
+      getPostList,
+      isLoading
     };
   }
 };
@@ -100,13 +148,19 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         f: common_vendor.o(($event) => $setup.changeToChannel(tabItem.id), tabItem.id)
       };
     }),
-    b: common_vendor.f(10, (item, k0, i0) => {
+    b: common_vendor.f($setup.postsList.postsList.newslist, (postItem, k0, i0) => {
       return {
-        a: "84574620-0-" + i0
+        a: postItem.id,
+        b: "84574620-0-" + i0,
+        c: common_vendor.p({
+          postItem
+        })
       };
     }),
-    c: common_vendor.o((...args) => $setup.goPublish && $setup.goPublish(...args))
+    c: $setup.isLoading,
+    d: common_vendor.o((...args) => $setup.goPublish && $setup.goPublish(...args))
   };
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/uniappPro/gdutCom/pages/community/community.vue"]]);
+_sfc_main.__runtimeHooks = 2;
 wx.createPage(MiniProgramPage);

@@ -18,7 +18,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding-top: 150rpx;
+		padding: 150rpx 0 200rpx;
 	}
 	.no-comment{
 		width: 300rpx;

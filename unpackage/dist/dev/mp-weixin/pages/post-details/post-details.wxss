@@ -64,6 +64,9 @@
   line-height: 50rpx;
   font-size: 33rpx;
 }
+.pic-content {
+  margin: 30rpx 0 20rpx;
+}
 .post-details-label {
   display: flex;
   margin-top: 20rpx;
@@ -113,6 +116,7 @@
 }
 .comment-container {
   background-color: #fff;
+  height: 1000rpx;
 }
 .details-comment-nav {
   box-sizing: border-box;

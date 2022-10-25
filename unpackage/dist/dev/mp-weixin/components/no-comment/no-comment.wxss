@@ -23,58 +23,14 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.comment-container {
-  padding: 30rpx 50rpx;
-  background-color: #fff;
-  border-bottom: 1rpx solid #f6f6f6;
-}
-.comment-content {
-  margin-bottom: 30rpx;
-  color: #3d3d3d;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  line-height: 50rpx;
-  font-size: 30rpx;
-}
-.comment-footer {
+.page-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
+  padding: 150rpx 0 200rpx;
 }
-.comment-footer-left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
-}
-.avatar-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 40rpx;
-  height: 40rpx;
-  margin-right: 15rpx;
-}
-.avatar-icon {
-  width: 40rpx;
-  height: 40rpx;
-  border-radius: 50%;
-}
-.user-name {
-  margin-right: 15rpx;
-  color: #96e8ba;
-  font-size: 25rpx;
-}
-.comment-time {
-  color: #ccc;
-  font-size: 25rpx;
-}
-.like-container {
-  display: flex;
-  align-items: center;
-  margin-right: 20rpx;
-}
-.like-icon {
-  width: 40rpx;
-  height: 40rpx;
+.no-comment {
+  width: 300rpx;
+  height: 300rpx;
 }

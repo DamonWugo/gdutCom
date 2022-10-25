@@ -5,9 +5,13 @@ const _sfc_main = {
   setup() {
     let userInfo = common_vendor.reactive({ userInfo: null });
     let isLogined = common_vendor.ref(false);
-    common_vendor.onBeforeMount(() => {
+    common_vendor.onMounted(() => {
       isLogined.value = store_index.store.state.loginAbout.isLogined;
-      userInfo.userInfo = JSON.parse(common_vendor.index.getStorageSync("userInfo")) == null ? null : JSON.parse(common_vendor.index.getStorageSync("userInfo"));
+      if (common_vendor.index.getStorageSync("userInfo") === "") {
+        userInfo.userInfo = null;
+      } else {
+        userInfo.userInfo = JSON.parse(common_vendor.index.getStorageSync("userInfo"));
+      }
     });
     return {
       isLogined,

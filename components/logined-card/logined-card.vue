@@ -2,12 +2,12 @@
 	<view class="logined-container" >
 		<view class="top-container">
 			<view class="my-info-container">
-				<text class="nick-name" v-if="isLogined">{{userInfo.nickName}}</text>
+				<text class="nick-name" v-if="isLogined">{{userInfo.userInfo.nickName}}</text>
 				<text class="nick-name" v-else @click="login">未登录</text>
 				<text class="school" v-if="isLogined">广东工业大学龙洞校区</text>
 			</view>
 			<view class="my-avatar-container">
-				<image v-if="isLogined" :src="userInfo.avatarUrl" mode="" class="my-avatar-icon" @click="goUserCenter"></image>
+				<image v-if="isLogined" :src="userInfo.userInfo.avatarUrl" mode="" class="my-avatar-icon" @click="goUserCenter"></image>
 				<image v-else :src="defaultAvatar" mode="" class="my-avatar-icon"></image>
 				<!-- <image :src="isLogined ? userInfo.avatarUrl : defaultAvatar" mode="" class="my-avatar-icon"></image> -->
 			</view>
@@ -27,16 +27,16 @@
 </template>
 
 <script>
-    import { onMounted, ref, onBeforeMount } from "vue"
+    import { onMounted, ref, onBeforeMount, reactive } from "vue"
 	import store from "../../store/index.js"
 	export default {
 		setup() {
-			let userInfo = ref('')
+			let userInfo = reactive({userInfo:{}})
 			let defaultAvatar = ref('../../static/avatar/defultavatar.png')
 			let isLogined = ref(store.state.loginAbout.isLogined)
 			let loginOrNot = ref('false')
-			onBeforeMount(()=>{
-				userInfo.value= store.state.loginAbout.userInfo == null ? defaultAvatar.value : store.state.loginAbout.userInfo
+			onMounted(()=>{
+				userInfo.userInfo= store.state.loginAbout.userInfo == null ? defaultAvatar.value : store.state.loginAbout.userInfo
 				loginOrNot.value = isLogined.value
 			})
 			function goUserCenter() {
@@ -58,6 +58,7 @@
 							success : (res)=>{
 								console.log('登录',res);
 								isLogined.value=true
+								store.dispatch('loginAbout/changeLoginStatus', true)
 								if(res.errMsg == "login:ok"){
 									let code =res.code;
 								}
