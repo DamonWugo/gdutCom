@@ -3,6 +3,7 @@
   "navigationBarTitleText": "帖子详情",
   "usingComponents": {
     "no-comment": "../../components/no-comment/no-comment",
+    "comment-card": "../../components/comment-card/comment-card",
     "do-commment-container": "../../components/do-commment-container/do-commment-container"
   }
 }

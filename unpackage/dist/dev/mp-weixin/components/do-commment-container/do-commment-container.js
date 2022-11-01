@@ -15,7 +15,8 @@ const _sfc_main = {
       });
     });
     function sendComment() {
-      context.emit("closeMask", commentVal.value);
+      context.emit("toSendComment", commentVal.value);
+      console.log("commentVal.value", commentVal.value);
     }
     return {
       keyWordHeight,

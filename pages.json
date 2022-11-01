@@ -4,7 +4,7 @@
 			"path": "pages/community/community",
 			"style": {
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
+				"enablePullDownRefresh": true,
 				"navigationBarTitleText": "社区",
 				"onReachBottomDistance": 50
 			}
@@ -51,7 +51,17 @@
                 "enablePullDownRefresh": false
             }
             
-        }
+        },
+		{
+		    "path" : "pages/all-replies-page/all-replies-page",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "全部回复",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+        
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

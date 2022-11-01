@@ -42,17 +42,22 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_vendor.t($props.postItem.title.substring(0, 3)),
-    b: common_vendor.t($props.postItem.description),
-    c: common_vendor.o(($event) => $setup.previewPic($props.postItem.picUrl)),
-    d: $props.postItem.picUrl,
-    e: $setup.isLiked ? $setup.noLiked : $setup.liked,
-    f: common_vendor.t($setup.likedNum == 0 ? "" : $setup.likedNum),
-    g: $setup.isLiked ? "#96e8ba" : "#a0a0a0",
-    h: common_vendor.o((...args) => $setup.doLike && $setup.doLike(...args)),
-    i: $props.postItem.name
+    a: $props.postItem.picUrl,
+    b: common_vendor.t($props.postItem.title.substring(0, 3)),
+    c: common_vendor.t($props.postItem.description),
+    d: $props.postItem.picUrl
+  }, $props.postItem.picUrl ? {
+    e: common_vendor.o(($event) => $setup.previewPic($props.postItem.picUrl)),
+    f: $props.postItem.picUrl
+  } : {}, {
+    g: common_vendor.t(!$props.postItem.classic ? "\u5168\u90E8" : $props.postItem.classic),
+    h: $setup.isLiked ? $setup.noLiked : $setup.liked,
+    i: common_vendor.t($setup.likedNum == 0 ? "" : $setup.likedNum),
+    j: $setup.isLiked ? "#96e8ba" : "#a0a0a0",
+    k: common_vendor.o((...args) => $setup.doLike && $setup.doLike(...args)),
+    l: $props.postItem.name
   }, $props.postItem.name ? {} : {}, {
-    j: common_vendor.o(($event) => $setup.goToPostDetailPage($props.postItem.id))
+    m: common_vendor.o(($event) => $setup.goToPostDetailPage($props.postItem.id))
   });
 }
 var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/uniappPro/gdutCom/components/post-card/post-card.vue"]]);

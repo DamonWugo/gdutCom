@@ -82,8 +82,8 @@
 }
 .post-content-pic {
   border-radius: 10rpx;
-  width: 410rpx;
-  height: 300rpx;
+  width: 360rpx;
+  height: 250rpx;
 }
 .post-footer {
   display: flex;

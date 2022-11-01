@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "全部回复",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "all-reply-header-card": "../../components/all-reply-header-card/all-reply-header-card"
+  }
+}

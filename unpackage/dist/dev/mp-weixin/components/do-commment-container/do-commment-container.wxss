@@ -59,14 +59,12 @@
 .textarea-container {
   box-sizing: border-box;
   width: 540rpx;
-  padding: 10rpx 20rpx;
+  padding: 20rpx;
   border-radius: 13rpx;
   background-color: #f6f6f6;
 }
 .text-area {
   font-size: 30rpx;
-  line-height: 50rpx;
-  height: 100rpx;
   width: 520rpx;
 }
 .btn-container {
@@ -77,6 +75,7 @@
   font-weight: 700;
   background-color: #75e89c;
   margin: 0 10rpx 0 10rpx;
+  height: 70rpx;
 }
 .key-word-container {
   background-color: #fff;

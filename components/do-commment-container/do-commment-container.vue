@@ -63,7 +63,8 @@
 			
 			//自定义事件，子传父
 			function sendComment(){
-				context.emit("closeMask", commentVal.value)
+				context.emit("toSendComment", commentVal.value)
+				console.log('commentVal.value',commentVal.value);
 			}
 			return{
 				keyWordHeight,
@@ -118,7 +119,7 @@
 	.textarea-container {
 		box-sizing: border-box;
 		width: 540rpx;
-		padding: 10rpx 20rpx;
+		padding: 20rpx;
 		// border: 1rpx solid #333;
 		border-radius: 13rpx;
 		background-color: #f6f6f6;
@@ -126,8 +127,7 @@
 
 	.text-area {
 		font-size: 30rpx;
-		line-height: 50rpx;
-		height: 100rpx;
+		// line-height: 50rpx;
 		width: 520rpx;
 	}
 
@@ -140,7 +140,8 @@
 		font-weight: 700;
 		background-color: #75e89c;
 		margin: 0 10rpx 0 10rpx;
-		}
+		height: 70rpx;
+	}
 	.key-word-container{
 		background-color: #fff;
 		width: 100%;

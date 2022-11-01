@@ -9,6 +9,7 @@ if (!Math) {
   "./pages/user-center/user-center.js";
   "./pages/msg-page/msg-page.js";
   "./pages/publish-page/publish-page.js";
+  "./pages/all-replies-page/all-replies-page.js";
 }
 const _sfc_main = {
   onLaunch: function() {

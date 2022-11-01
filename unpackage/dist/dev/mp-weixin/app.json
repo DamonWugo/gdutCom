@@ -5,7 +5,8 @@
     "pages/post-details/post-details",
     "pages/user-center/user-center",
     "pages/msg-page/msg-page",
-    "pages/publish-page/publish-page"
+    "pages/publish-page/publish-page",
+    "pages/all-replies-page/all-replies-page"
   ],
   "window": {
     "navigationBarTextStyle": "black",

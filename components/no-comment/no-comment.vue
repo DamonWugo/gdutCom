@@ -18,7 +18,8 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding: 150rpx 0 200rpx;
+		// padding: 150rpx 0 200rpx;
+		height: 900rpx;
 	}
 	.no-comment{
 		width: 300rpx;

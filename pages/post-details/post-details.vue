@@ -4,7 +4,7 @@
 			<view class="post-details-header">
 				<view class="post-details-header-left">
 					<image src="../../static/avatar/touxiang-12.png" mode="" class="avatar"></image>
-					<text>{{postDetail.postDetail[0].title.substring(0,3)}}</text>
+					<text>{{postDetail.postDetail[0].title}}</text>
 				</view>
 				<text class="post-details-header-right">{{postDetail.postDetail[0].ctime}}</text>
 			</view>
@@ -42,29 +42,26 @@
 					{{tabItem.tabName}}
 				</view>
 			</view>
-			<view class="comment-container">
-				<view class="no-comment-container">
+			<view class="details-comment-page">
+				<view class="no-comment-container" v-if="!commentList.commentList.length">
 					<no-comment></no-comment>
 				</view>
-				<!-- <comment-card></comment-card>
-				<comment-card></comment-card>
-				<comment-card></comment-card>
-				<comment-card></comment-card>
-				<comment-card></comment-card>
-				<comment-card></comment-card> -->
+				
+				<comment-card
+					v-for="commentItem in commentList.commentList"
+					:key='commentItem.id'
+					:commentItem='commentItem'
+				></comment-card>
+				
+				
 
 			</view>
 		</view>
-		<!-- <do-commment-container
-			class="do-commment"
-			:style="isShowComment == true ? 'display: block' : 'display: none'"
-			:isAutoFocus = "isAutoFocus"
-		></do-commment-container> -->
 		<view class="comment-and-mask-container" v-if="isShowComment">
 			<view class="mask" @click="clearMask" :style="{ height:  3000 + 'rpx'}" >
 				sdsd
 			</view>
-			<do-commment-container class="do-commment" :isAutoFocus="isAutoFocus" @closeMask="clearMask" ></do-commment-container>
+			<do-commment-container class="do-commment" :isAutoFocus="isAutoFocus" @toSendComment="sendComment" ></do-commment-container>
 		</view>
 
 	</view>
@@ -78,8 +75,10 @@
 		ref,
 	} from "vue"
 	import { onLoad } from '@dcloudio/uni-app';
+
 	//api
 	import getPosts from '../../service/getPosts.js'
+	import moment from 'moment'
 	export default {
 		setup() {
 			let navList = reactive([{
@@ -97,7 +96,14 @@
 			
 			let postDetail = reactive({postDetail:{}})
 			
-			let commentList = reactive({commentList:[]})
+			let commentList = reactive({commentList:[{
+					id: Date.now(),
+					time: Date.now(),
+					commentVal: '已经有的了评论', 
+					name: '孙悟空',
+					avatarUrl: '../../static/logo.png',
+					likeNum: 13
+					}]})
 			onLoad((option)=>{
 				console.log('option',option.id);
 				getPosts().then((res)=>{
@@ -136,9 +142,21 @@
 				})
 			}
 
-			function clearMask(commentVal) {
-				console.log('commentVal',commentVal);
-				// commentList.commentList.unshift({commentVal: commentVal, name: getsto})
+			function sendComment(commentVal) {
+				const userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+				commentList.commentList.unshift({
+					id: Date.now(),
+					time: Date.now(),
+					commentVal: commentVal, 
+					name: userInfo.nickName,
+					avatarUrl: userInfo.avatarUrl,
+					likeNum: 13
+					})
+					console.log('commentVal',commentVal);
+				isShowComment.value = false
+				isAutoFocus.value = false
+			}
+			function clearMask(){
 				isShowComment.value = false
 				isAutoFocus.value = false
 			}
@@ -153,7 +171,8 @@
 				maskHeight,
 				postDetail,
 				previewPic,
-				commentList
+				commentList,
+				sendComment
 			}
 		}
 	}
@@ -213,7 +232,9 @@
 	}
 	.pic-content{
 		margin: 30rpx 0 20rpx;
-		
+	}
+	.post-content-pic{
+		border-radius: 10rpx;
 	}
 
 	.post-details-label {
@@ -275,9 +296,8 @@
 
 	}
 
-	.comment-container {
+	.details-comment-page{
 		background-color: #fff;
-		height: 1000rpx;
 	}
 
 	.details-comment-nav {
@@ -290,7 +310,7 @@
 		border-bottom: 2rpx solid #f6f6f6;
 		padding: 10rpx 40rpx 0;
 		color: #333;
-		font-size: 36rpx;
+		font-size: 33rpx;
 	}
 
 	.the-tab {
@@ -300,7 +320,7 @@
 	.active {
 		color: #96e8ba;
 		// font-weight: 700;
-		font-size: 40rpx;
+		font-size: 35rpx;
 	}
 
 	.no-comment-container {

@@ -50,7 +50,9 @@ const _sfc_main = {
     let userInfo = common_vendor.reactive({
       userInfo: {}
     });
-    let postsList = common_vendor.reactive({ postsList: [] });
+    let postsList = common_vendor.reactive({
+      postsList: []
+    });
     let isLoading = common_vendor.ref(false);
     common_vendor.onMounted(() => {
       common_vendor.index.checkSession({
@@ -98,6 +100,13 @@ const _sfc_main = {
         });
       }, 1e3);
     }
+    common_vendor.onLoad(() => {
+      common_vendor.index.$on("addPost", (data) => {
+        console.log("data", data.post);
+        postsList.postsList.newslist.unshift(data.post.post);
+        console.log("]", postsList.postsList.newslist);
+      });
+    });
     common_vendor.onReachBottom(() => {
       console.log("\u89E6\u5E95\u4E86");
       getPostList();
@@ -108,6 +117,18 @@ const _sfc_main = {
         imageUrl: "../../status/avatar/defultavatar.png",
         path: "/pages/community/community"
       };
+    });
+    common_vendor.onPullDownRefresh((res) => {
+      service_getPosts.getPosts().then((res2) => {
+        if (res2.statusCode === 200) {
+          store_index.store.dispatch("postsAbout/savePostsList", res2.data);
+          postsList.postsList = res2.data;
+          console.log("postsList333333", postsList.postsList);
+          common_vendor.index.stopPullDownRefresh();
+        }
+      }).catch((err) => {
+        console.log("\u8BF7\u6C42\u5E16\u5B50err", err);
+      });
     });
     function changeToChannel(tabItemId) {
       tabIndex.value = tabItemId;

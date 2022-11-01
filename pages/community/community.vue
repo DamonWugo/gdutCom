@@ -1,5 +1,7 @@
 <template>
 	<view class="community-container">
+		<!-- <uni-search-bar placeholder="搜索文章" bgColor="#EEEEEE" @confirm="search" /> -->
+		
 		<view class="nav-bar">
 			<scroll-view class="scroll-view-community-bar" scroll-x="true">
 				<view class="tab-bar-for-flex">
@@ -16,7 +18,8 @@
 			</scroll-view>
 		</view>
 		<view class="post-container">
-			<post-card v-for="postItem in postsList.postsList.newslist" :key="postItem.id" :postItem="postItem"></post-card>
+			<post-card v-for="postItem in postsList.postsList.newslist" :key="postItem.id" :postItem="postItem">
+			</post-card>
 			<view class="" v-show="isLoading">
 				加载中......
 			</view>
@@ -35,7 +38,12 @@
 		onMounted,
 		onBeforeMount,
 	} from "vue"
-	import { onReachBottom, onShareAppMessage } from '@dcloudio/uni-app';
+	import {
+		onReachBottom,
+		onShareAppMessage,
+		onPullDownRefresh,
+		onLoad
+	} from '@dcloudio/uni-app';
 	import store from "../../store/index.js"
 
 	//api
@@ -86,7 +94,9 @@
 			let userInfo = reactive({
 				userInfo: {}
 			});
-			let postsList = reactive({postsList:[]})
+			let postsList = reactive({
+				postsList: []
+			})
 			let isLoading = ref(false)
 			onMounted(() => {
 				//判断登陆状态
@@ -100,7 +110,7 @@
 							userInfo.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 							console.log('userInfo.userInfo', userInfo.userInfo);
 							store.dispatch("loginAbout/savaUserInfo", userInfo.userInfo);
-							
+
 						}
 					},
 					fail: (res) => {
@@ -111,7 +121,7 @@
 				uni.showLoading({
 					title: '加载中'
 				});
-				
+
 				// 请求帖子
 				getPosts().then((res) => {
 					if (res.statusCode === 200) {
@@ -123,35 +133,66 @@
 				}).catch(err => {
 					console.log('请求帖子err', err);
 				})
+				// uni.showActionSheet({
+				// 	itemList: ['A', 'B', 'C'],
+				// 	success: function (res) {
+				// 		console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+				// 	},
+				// 	fail: function (res) {
+				// 		console.log(res.errMsg);
+				// 	}
+				// });
 			})
-			function getPostList(){
+
+			function getPostList() {
 				isLoading.value = true
-				setTimeout(()=>{
+				setTimeout(() => {
 					getPosts().then((res) => {
 						if (res.statusCode === 200) {
-							postsList.postsList.newslist=postsList.postsList.newslist.concat(res.data.newslist)
+							postsList.postsList.newslist = postsList.postsList.newslist.concat(res.data
+								.newslist)
 							isLoading.value = false
 							console.log('postsList11', postsList.postsList.newslist);
 						}
 					}).catch(err => {
 						console.log('请求帖子err', err);
 					})
-				},1000)
-				
-			}
+				}, 1000)
 
-			onReachBottom(()=>{
+			}
+			onLoad(() => {
+				uni.$on('addPost', (data) => {
+					console.log('data', data.post);
+					postsList.postsList.newslist.unshift(data.post.post)
+					console.log(']', postsList.postsList.newslist);
+				})
+			})
+
+			onReachBottom(() => {
 				console.log('触底了');
 				getPostList()
 			})
-			onShareAppMessage((res)=>{
+			onShareAppMessage((res) => {
 				return {
-				    title: '我去',
-				    imageUrl: '../../status/avatar/defultavatar.png',
-				    path: '/pages/community/community'
+					title: '我去',
+					imageUrl: '../../status/avatar/defultavatar.png',
+					path: '/pages/community/community'
 				}
 			})
-			
+			onPullDownRefresh((res) => {
+				// 请求帖子
+				getPosts().then((res) => {
+					if (res.statusCode === 200) {
+						store.dispatch('postsAbout/savePostsList', res.data);
+						postsList.postsList = res.data
+						console.log('postsList333333', postsList.postsList);
+						uni.stopPullDownRefresh()
+					}
+				}).catch(err => {
+					console.log('请求帖子err', err);
+				})
+			})
+
 
 			function changeToChannel(tabItemId) {
 				tabIndex.value = tabItemId
@@ -179,8 +220,8 @@
 	.community-container {
 		// background-color: #f6f6f6;
 	}
-	
-	
+
+
 	.scroll-view-community-bar {
 		white-space: nowrap;
 		width: 100%;

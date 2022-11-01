@@ -2,7 +2,7 @@
 	<view class="post-card-container" @click="goToPostDetailPage(postItem.id)">
 		<view class="post-header">
 			<view class="post-header-left">
-				<image src="../../static/avatar/defultavatar.png" mode="" class="avatar"></image>
+				<image :src="postItem.picUrl" mode="" class="avatar"></image>
 				<text>{{postItem.title.substring(0,3)}}</text>
 				<!-- <text>用户名</text> -->
 			</view>
@@ -13,13 +13,13 @@
 				<text>{{postItem.description}}</text>
 				<!-- <text>啥啊这是</text> -->
 			</view>
-			<view class="pic-content" >
+			<view class="pic-content" v-if="postItem.picUrl">
 				<image @click.stop="previewPic(postItem.picUrl)" :src="postItem.picUrl" mode="widthFix" class="post-content-pic"></image>
 			</view>
 		</view>
 		<view class="post-footer">
 			<view class="classic-label">
-				<text>二手市场</text>
+				<text>{{!postItem.classic ? '全部' : postItem.classic}}</text>
 			</view>
 			<view class="post-footer-right">
 				<view class="post-footer-comment">
@@ -89,13 +89,15 @@ import { onMounted, ref } from "vue"
 				likedNum,
 				previewPic,
 				goToPostDetailPage,
-				doLike
+				doLike,
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	
+
 	.post-card-container {
 		box-sizing: border-box;
 		width: 680rpx;
@@ -163,8 +165,8 @@ import { onMounted, ref } from "vue"
 	}
 	.post-content-pic{
 		border-radius: 10rpx;
-		width: 410rpx;
-		height: 300rpx;
+		width: 360rpx;
+		height: 250rpx;
 	}
 
 

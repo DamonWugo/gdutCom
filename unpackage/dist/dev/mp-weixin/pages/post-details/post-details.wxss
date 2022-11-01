@@ -67,6 +67,9 @@
 .pic-content {
   margin: 30rpx 0 20rpx;
 }
+.post-content-pic {
+  border-radius: 10rpx;
+}
 .post-details-label {
   display: flex;
   margin-top: 20rpx;
@@ -114,9 +117,8 @@
   width: 55rpx;
   height: 55rpx;
 }
-.comment-container {
+.details-comment-page {
   background-color: #fff;
-  height: 1000rpx;
 }
 .details-comment-nav {
   box-sizing: border-box;
@@ -128,14 +130,14 @@
   border-bottom: 2rpx solid #f6f6f6;
   padding: 10rpx 40rpx 0;
   color: #333;
-  font-size: 36rpx;
+  font-size: 33rpx;
 }
 .the-tab {
   margin-right: 70rpx;
 }
 .active {
   color: #96e8ba;
-  font-size: 40rpx;
+  font-size: 35rpx;
 }
 .no-comment-container {
   display: flex;
