@@ -62,6 +62,15 @@
 		    
 		}
         
+        ,{
+            "path" : "pages/physical-test-page/physical-test-page",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "体测数据计算",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

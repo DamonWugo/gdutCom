@@ -45,52 +45,14 @@
 		onLoad
 	} from '@dcloudio/uni-app';
 	import store from "../../store/index.js"
-
+	import { tablist } from '../../global/tab-list/tab-list.js'
 	//api
 	import getPosts from '../../service/getPosts.js'
 	export default {
 		setup() {
 			let tabIndex = ref('001');
-			let tabList = reactive([{
-					id: '001',
-					tabName: '全部',
-					tabIcon: '../../static/tabBarIcon/classicl.png'
-				}, {
-					id: '002',
-					tabName: '二手市场',
-					tabIcon: '../../static/iconAll/historyl.png'
-				},
-				{
-					id: '003',
-					tabName: '组队',
-					tabIcon: '../../static/iconAll/homel.png'
-				},
-				{
-					id: '004',
-					tabName: '广告',
-					tabIcon: '../../static/iconAll/menul.png'
-				},
-				{
-					id: '005',
-					tabName: '热榜',
-					tabIcon: '../../static/iconAll/morel.png'
-				},
-				{
-					id: '006',
-					tabName: '最新',
-					tabIcon: '../../static/iconAll/photosl.png'
-				},
-				{
-					id: '007',
-					tabName: '外卖',
-					tabIcon: '../../static/iconAll/settingl.png'
-				},
-				{
-					id: '008',
-					tabName: '吴总啊',
-					tabIcon: '../../static/iconAll/searchl.png'
-				},
-			]);
+			let tabList = reactive(tablist)
+			
 			let userInfo = reactive({
 				userInfo: {}
 			});
@@ -99,6 +61,7 @@
 			})
 			let isLoading = ref(false)
 			onMounted(() => {
+				console.log('000', tablist);
 				//判断登陆状态
 				uni.checkSession({
 					success: (res) => {
@@ -195,6 +158,11 @@
 
 
 			function changeToChannel(tabItemId) {
+				uni.vibrateShort({
+					success: function () {
+						console.log('震动');
+					}
+				});
 				tabIndex.value = tabItemId
 			}
 			// 发布帖子

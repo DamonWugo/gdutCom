@@ -14,7 +14,15 @@
 				<!-- <text>啥啊这是</text> -->
 			</view>
 			<view class="pic-content" v-if="postItem.picUrl">
-				<image @click.stop="previewPic(postItem.picUrl)" :src="postItem.picUrl" mode="widthFix" class="post-content-pic"></image>
+				<view class="single-pic-container" v-if="!Array.isArray(postItem.picUrl)? true : false">
+					<image @click.stop="previewPic(postItem.picUrl)" :src="postItem.picUrl" mode="aspectFill" class="post-content-pic"></image>
+				</view>
+				<view class="multiple-pic-container" v-else>
+					<view v-for="(imgItem,index) in postItem.picUrl" :key="index" class="multiple-pic-item-container" @click.stop="previewMultiple(index)">
+						<image :src="imgItem.imgUrl" mode="aspectFill" class="multiple-pic-item"></image>
+					</view>
+				</view>
+				
 			</view>
 		</view>
 		<view class="post-footer">
@@ -64,6 +72,11 @@ import { onMounted, ref } from "vue"
 				console.log(',2222',props.postItem);
 			})
 			function goToPostDetailPage(id) {
+				uni.vibrateShort({
+					success: function () {
+						console.log('震动');
+					}
+				});
 				uni.navigateTo({
 					url: `/pages/post-details/post-details?id=${id}`
 				})
@@ -74,7 +87,22 @@ import { onMounted, ref } from "vue"
 					current:0
 				})
 			}
+			function previewMultiple(imgIndex){
+				let imgList = []
+				props.postItem.picUrl.forEach(item =>{
+					imgList.push(item.imgUrl)
+				})
+				uni.previewImage({
+					urls:imgList,
+					current:imgIndex
+				})
+			}
 			function doLike(){
+				uni.vibrateShort({
+					success: function () {
+						console.log('震动');
+					}
+				});
 				isLiked.value = !isLiked.value
 				if(isLiked.value){
 					likedNum.value++
@@ -90,12 +118,13 @@ import { onMounted, ref } from "vue"
 				previewPic,
 				goToPostDetailPage,
 				doLike,
+				previewMultiple
 			}
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	
 
 	.post-card-container {
@@ -131,7 +160,7 @@ import { onMounted, ref } from "vue"
 		align-items: center;
 
 		text {
-			color: #96e8ba;
+			color: #131313;
 			font-size: 35rpx;
 		}
 	}
@@ -167,6 +196,22 @@ import { onMounted, ref } from "vue"
 		border-radius: 10rpx;
 		width: 360rpx;
 		height: 250rpx;
+	}
+	.multiple-pic-container{
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		flex-wrap: wrap;
+	}
+	.multiple-pic-item-container{
+		width: 193rpx;
+		height: 193rpx;
+		background-color: #f6f6f6;
+		margin: 10rpx 10rpx;
+	}
+	.multiple-pic-item{
+		width: 193rpx;
+		height: 193rpx;
 	}
 
 

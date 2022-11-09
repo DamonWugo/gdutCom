@@ -4,7 +4,7 @@ function getPosts() {
 	return uni.request({
 		url: 'https://api.tianapi.com/startup/index',
 		data: {
-			key: 'ce110e048b4fcf9f199f532058960a94',
+			key: 'ce110e048b4fcf9f199f532058960a9',
 			num: 10,
 		},
 		

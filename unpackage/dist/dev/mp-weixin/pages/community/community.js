@@ -1,52 +1,12 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
 var store_index = require("../../store/index.js");
+var global_tabList_tabList = require("../../global/tab-list/tab-list.js");
 var service_getPosts = require("../../service/getPosts.js");
 const _sfc_main = {
   setup() {
     let tabIndex = common_vendor.ref("001");
-    let tabList = common_vendor.reactive([
-      {
-        id: "001",
-        tabName: "\u5168\u90E8",
-        tabIcon: "../../static/tabBarIcon/classicl.png"
-      },
-      {
-        id: "002",
-        tabName: "\u4E8C\u624B\u5E02\u573A",
-        tabIcon: "../../static/iconAll/historyl.png"
-      },
-      {
-        id: "003",
-        tabName: "\u7EC4\u961F",
-        tabIcon: "../../static/iconAll/homel.png"
-      },
-      {
-        id: "004",
-        tabName: "\u5E7F\u544A",
-        tabIcon: "../../static/iconAll/menul.png"
-      },
-      {
-        id: "005",
-        tabName: "\u70ED\u699C",
-        tabIcon: "../../static/iconAll/morel.png"
-      },
-      {
-        id: "006",
-        tabName: "\u6700\u65B0",
-        tabIcon: "../../static/iconAll/photosl.png"
-      },
-      {
-        id: "007",
-        tabName: "\u5916\u5356",
-        tabIcon: "../../static/iconAll/settingl.png"
-      },
-      {
-        id: "008",
-        tabName: "\u5434\u603B\u554A",
-        tabIcon: "../../static/iconAll/searchl.png"
-      }
-    ]);
+    let tabList = common_vendor.reactive(global_tabList_tabList.tablist);
     let userInfo = common_vendor.reactive({
       userInfo: {}
     });
@@ -55,6 +15,7 @@ const _sfc_main = {
     });
     let isLoading = common_vendor.ref(false);
     common_vendor.onMounted(() => {
+      console.log("000", global_tabList_tabList.tablist);
       common_vendor.index.checkSession({
         success: (res) => {
           console.log("res", res);
@@ -131,6 +92,11 @@ const _sfc_main = {
       });
     });
     function changeToChannel(tabItemId) {
+      common_vendor.index.vibrateShort({
+        success: function() {
+          console.log("\u9707\u52A8");
+        }
+      });
       tabIndex.value = tabItemId;
     }
     function goPublish() {

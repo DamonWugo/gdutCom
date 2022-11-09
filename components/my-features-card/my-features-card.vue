@@ -34,6 +34,12 @@ import { reactive } from "vue";
 					tabName: '我的消息',
 					tabIcon:'../../static/iconAll/morel.png'
 				},
+				{
+					id:'004',
+					tabName: '计算体测',
+					tabIcon:'../../static/iconAll/timel.png'
+					
+				}
 				
 			])
 			function goOtherPage(id){
@@ -50,6 +56,10 @@ import { reactive } from "vue";
 						goMsgCenter()
 						break
 					}
+					case '004': {
+						goPhysicalTestPage()
+						break
+					}
 				}
 			}
 			function goUserCenter(){
@@ -62,11 +72,17 @@ import { reactive } from "vue";
 					url:"/pages/msg-page/msg-page"
 				})
 			}
+			function goPhysicalTestPage(){
+				uni.navigateTo({
+					url:"/pages/physical-test-page/physical-test-page"
+				})
+			}
 			return{
 				goUserCenter,
 				goMsgCenter,
 				myNavList,
-				goOtherPage
+				goOtherPage,
+				goPhysicalTestPage
 			}
 		}
 	}

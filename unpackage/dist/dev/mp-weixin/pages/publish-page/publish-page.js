@@ -1,53 +1,31 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
 var store_index = require("../../store/index.js");
+var global_tabList_tabList = require("../../global/tab-list/tab-list.js");
 const _sfc_main = {
   setup() {
     let navIndex = common_vendor.ref("001");
-    let tabList = common_vendor.reactive([
-      {
-        id: "001",
-        tabName: "\u5168\u90E8"
-      },
-      {
-        id: "002",
-        tabName: "\u4E8C\u624B\u5E02\u573A"
-      },
-      {
-        id: "003",
-        tabName: "\u7EC4\u961F"
-      },
-      {
-        id: "004",
-        tabName: "\u5E7F\u544A"
-      },
-      {
-        id: "005",
-        tabName: "\u70ED\u699C"
-      },
-      {
-        id: "006",
-        tabName: "\u6700\u65B0"
-      },
-      {
-        id: "007",
-        tabName: "\u5916\u5356"
-      },
-      {
-        id: "008",
-        tabName: "\u5434\u603B\u554A"
-      }
-    ]);
+    let tabList = common_vendor.reactive(global_tabList_tabList.tablist);
     let postValue = common_vendor.ref("");
     let navName = common_vendor.ref("\u5168\u90E8");
     let post = common_vendor.reactive({
       post: {}
     });
+    let imageList = common_vendor.reactive([]);
+    let imgCount = common_vendor.ref(9);
     function uploadImg() {
       common_vendor.index.chooseImage({
+        count: imgCount.value - imageList.length,
         success: (chooseImageRes) => {
-          chooseImageRes.tempFilePaths;
+          const tempFilePaths = chooseImageRes.tempFilePaths;
           console.log("212", chooseImageRes);
+          for (let i = 0, len = tempFilePaths.length; i < len; i++) {
+            imageList.push({
+              id: Date.now(),
+              imgUrl: tempFilePaths[i]
+            });
+          }
+          console.log("list", imageList);
         }
       });
     }
@@ -56,13 +34,12 @@ const _sfc_main = {
       navName.value = tabName;
     }
     function publishPost() {
-      console.log("postValue", postValue);
       post.post = {
         id: Date.now(),
         ctime: Date.now(),
         title: store_index.store.state.loginAbout.userInfo.nickName,
         description: postValue.value,
-        picUrl: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbig5.wallcoo.com%2Fsport%2FNBA_Denver_Nuggets%2Fwallpapers%2F1280x1024%2Fkleizawallpaper06.jpg&refer=http%3A%2F%2Fbig5.wallcoo.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669725010&t=013453ad445c92b2ecb8c51f9cf21988",
+        picUrl: imageList.length <= 0 ? null : imageList,
         classic: navName.value
       };
       common_vendor.index.$emit("addPost", {
@@ -76,13 +53,30 @@ const _sfc_main = {
         common_vendor.index.navigateBack({
           url: "/pages/community/community"
         });
-      }, 500);
+      }, 800);
     }
-    function select(e) {
-      console.log("e", e);
+    function previewPic(index) {
+      let imgList = [];
+      imageList.forEach((item) => {
+        imgList.push(item.imgUrl);
+      });
+      common_vendor.index.previewImage({
+        urls: imgList,
+        current: index
+      });
     }
-    function progress(e) {
-      console.log("ee", e);
+    function deleteImg(imgIndex) {
+      common_vendor.index.showActionSheet({
+        itemList: ["\u5220\u9664\u6B64\u7167\u7247"],
+        itemColor: "#ff0004",
+        success: function(res) {
+          imageList.splice(imgIndex, 1);
+          console.log("\u9009\u4E2D\u4E86\u7B2C" + (res.tapIndex + 1) + "\u4E2A\u6309\u94AE");
+        },
+        fail: function(res) {
+          console.log(res.errMsg);
+        }
+      });
     }
     return {
       post,
@@ -92,31 +86,29 @@ const _sfc_main = {
       selectClaassicItem,
       publishPost,
       uploadImg,
-      select,
-      progress
+      imageList,
+      previewPic,
+      deleteImg,
+      imgCount
     };
   }
 };
-if (!Array) {
-  const _easycom_uni_file_picker2 = common_vendor.resolveComponent("uni-file-picker");
-  _easycom_uni_file_picker2();
-}
-const _easycom_uni_file_picker = () => "../../uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.js";
-if (!Math) {
-  _easycom_uni_file_picker();
-}
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
+  return common_vendor.e({
     a: -1,
     b: $setup.postValue,
     c: common_vendor.o(($event) => $setup.postValue = $event.detail.value),
-    d: common_vendor.o($setup.select),
-    e: common_vendor.o($setup.progress),
-    f: common_vendor.p({
-      limit: "9",
-      title: "\u8BF7\u9009\u62E9\u56FE\u7247(\u6700\u591A9\u5F20)",
-      ["auto-upload"]: false
+    d: common_vendor.f($setup.imageList, (imgItem, index, i0) => {
+      return {
+        a: imgItem.imgUrl,
+        b: common_vendor.o(($event) => $setup.previewPic(index)),
+        c: common_vendor.o(($event) => $setup.deleteImg(index))
+      };
     }),
+    e: $setup.imageList.length >= 9 ? false : true
+  }, ($setup.imageList.length >= 9 ? false : true) ? {
+    f: common_vendor.o((...args) => $setup.uploadImg && $setup.uploadImg(...args))
+  } : {}, {
     g: common_vendor.f($setup.tabList, (item, k0, i0) => {
       return {
         a: common_vendor.t(item.tabName),
@@ -126,7 +118,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       };
     }),
     h: common_vendor.o((...args) => $setup.publishPost && $setup.publishPost(...args))
-  };
+  });
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/uniappPro/gdutCom/pages/publish-page/publish-page.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-488795b4"], ["__file", "D:/uniappPro/gdutCom/pages/publish-page/publish-page.vue"]]);
 wx.createPage(MiniProgramPage);

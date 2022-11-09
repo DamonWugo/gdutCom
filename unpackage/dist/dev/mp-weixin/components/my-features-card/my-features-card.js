@@ -17,6 +17,11 @@ const _sfc_main = {
         id: "003",
         tabName: "\u6211\u7684\u6D88\u606F",
         tabIcon: "../../static/iconAll/morel.png"
+      },
+      {
+        id: "004",
+        tabName: "\u8BA1\u7B97\u4F53\u6D4B",
+        tabIcon: "../../static/iconAll/timel.png"
       }
     ]);
     function goOtherPage(id) {
@@ -33,6 +38,10 @@ const _sfc_main = {
           goMsgCenter();
           break;
         }
+        case "004": {
+          goPhysicalTestPage();
+          break;
+        }
       }
     }
     function goUserCenter() {
@@ -45,11 +54,17 @@ const _sfc_main = {
         url: "/pages/msg-page/msg-page"
       });
     }
+    function goPhysicalTestPage() {
+      common_vendor.index.navigateTo({
+        url: "/pages/physical-test-page/physical-test-page"
+      });
+    }
     return {
       goUserCenter,
       goMsgCenter,
       myNavList,
-      goOtherPage
+      goOtherPage,
+      goPhysicalTestPage
     };
   }
 };

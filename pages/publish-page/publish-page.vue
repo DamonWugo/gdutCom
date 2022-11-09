@@ -5,16 +5,12 @@
 				:auto-height="true"></textarea>
 		</view>
 		<view class="img-container">
-				<uni-file-picker
-					limit="9"
-					title="请选择图片(最多9张)"
-					:auto-upload="false"
-					@select="select" 
-					@progress="progress" 
-				></uni-file-picker>
-			<!-- <view class="add-img-container" @click="uploadImg">
+			<view v-for="(imgItem,index) in imageList" class="img-list-container" @click="previewPic(index)" @longpress="deleteImg(index)">
+				<image :src="imgItem.imgUrl" mode="aspectFill" class="img-list-item"></image>
+			</view>
+			<view class="add-img-container" @click="uploadImg" v-if="imageList.length >= 9 ? false : true">
 				<image src="../../static/plus.png" mode="" class="add-img-icon"></image>
-			</view> -->
+			</view>
 		</view>
 		<view class="classic-container">
 			<view class="classic-header">
@@ -43,52 +39,33 @@
 		ref
 	} from 'vue'
 	import store from "../../store/index.js"
+	import { tablist } from '../../global/tab-list/tab-list.js'
 	export default {
 		setup() {
 			let navIndex = ref('001')
-			let tabList = reactive([{
-					id: '001',
-					tabName: '全部',
-				}, {
-					id: '002',
-					tabName: '二手市场',
-				},
-				{
-					id: '003',
-					tabName: '组队',
-				},
-				{
-					id: '004',
-					tabName: '广告',
-				},
-				{
-					id: '005',
-					tabName: '热榜',
-				},
-				{
-					id: '006',
-					tabName: '最新',
-				},
-				{
-					id: '007',
-					tabName: '外卖',
-				},
-				{
-					id: '008',
-					tabName: '吴总啊',
-				},
-			]);
+			let tabList = reactive(tablist);
 			let postValue = ref('')
 			let navName = ref('全部')
 			let post = reactive({
 				post: {}
 			})
+			let imageList = reactive([])
+			let imgCount = ref(9)
 
 			function uploadImg() {
 				uni.chooseImage({
+					count: imgCount.value - imageList.length,
 					success: (chooseImageRes) => {
 						const tempFilePaths = chooseImageRes.tempFilePaths;
 						console.log('212', chooseImageRes);
+						for(let i = 0, len = tempFilePaths.length; i< len;i++ ){
+							imageList.push({
+								id: Date.now(),
+								imgUrl: tempFilePaths[i]
+							})
+						}
+						
+						console.log('list', imageList);
 						// uni.uploadFile({
 						// 	url: 'https://www.example.com/upload', //仅为示例，非真实的接口地址
 						// 	filePath: tempFilePaths[0],
@@ -110,13 +87,14 @@
 			}
 
 			function publishPost() {
-				console.log('postValue', postValue);
+				
+				// console.log('postValue', nanoid());
 				post.post = {
 					id: Date.now(),
 					ctime: Date.now(),
 					title: store.state.loginAbout.userInfo.nickName,
 					description: postValue.value,
-					picUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbig5.wallcoo.com%2Fsport%2FNBA_Denver_Nuggets%2Fwallpapers%2F1280x1024%2Fkleizawallpaper06.jpg&refer=http%3A%2F%2Fbig5.wallcoo.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1669725010&t=013453ad445c92b2ecb8c51f9cf21988',
+					picUrl: imageList.length <= 0 ? null : imageList,
 					classic: navName.value,
 				}
 				uni.$emit('addPost', {
@@ -130,17 +108,34 @@
 					uni.navigateBack({
 						url: '/pages/community/community'
 					})
-				}, 500)
+				}, 800)
 
 
 			}
 			
-			function select(e){
-				console.log('e',e);
+			function previewPic(index){
+				let imgList = []
+				imageList.forEach(item =>{
+					imgList.push(item.imgUrl)
+				})
+				uni.previewImage({
+					urls:imgList,
+					current:index
+				})
 			}
 			
-			function progress(e){
-				console.log('ee',e);
+			function deleteImg(imgIndex){
+				uni.showActionSheet({
+					itemList: ['删除此照片'],
+					itemColor: '#ff0004',
+					success: function (res) {
+						imageList.splice(imgIndex,1)
+						console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+					},
+					fail: function (res) {
+						console.log(res.errMsg);
+					}
+				});
 			}
 			
 			return {
@@ -151,14 +146,16 @@
 				selectClaassicItem,
 				publishPost,
 				uploadImg,
-				select,
-				progress
+				imageList,
+				previewPic,
+				deleteImg,
+				imgCount
 			}
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.publish-container {
 		box-sizing: border-box;
 		display: flex;
@@ -182,19 +179,37 @@
 	}
 
 	.img-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		flex-wrap: wrap;
 		padding: 30rpx;
 		// height: 200rpx;
 		background-color: #fff;
 		margin: 0 0 30rpx 0;
+	}
+	.img-list-container{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 193rpx;
+		height: 193rpx;
+		background-color: #f6f6f6;
+		margin: 10rpx 10rpx;
+	}
+	.img-list-item{
+		width: 193rpx;
+		height: 193rpx;
 	}
 
 	.add-img-container {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 170rpx;
-		height: 170rpx;
+		width: 190rpx;
+		height: 190rpx;
 		background-color: #f6f6f6;
+		margin: 10rpx 10rpx;
 	}
 
 	.add-img-icon {

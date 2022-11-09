@@ -11,6 +11,11 @@ const _sfc_main = {
       console.log(",2222", props.postItem);
     });
     function goToPostDetailPage(id) {
+      common_vendor.index.vibrateShort({
+        success: function() {
+          console.log("\u9707\u52A8");
+        }
+      });
       common_vendor.index.navigateTo({
         url: `/pages/post-details/post-details?id=${id}`
       });
@@ -21,7 +26,22 @@ const _sfc_main = {
         current: 0
       });
     }
+    function previewMultiple(imgIndex) {
+      let imgList = [];
+      props.postItem.picUrl.forEach((item) => {
+        imgList.push(item.imgUrl);
+      });
+      common_vendor.index.previewImage({
+        urls: imgList,
+        current: imgIndex
+      });
+    }
     function doLike() {
+      common_vendor.index.vibrateShort({
+        success: function() {
+          console.log("\u9707\u52A8");
+        }
+      });
       isLiked.value = !isLiked.value;
       if (isLiked.value) {
         likedNum.value++;
@@ -36,7 +56,8 @@ const _sfc_main = {
       likedNum,
       previewPic,
       goToPostDetailPage,
-      doLike
+      doLike,
+      previewMultiple
     };
   }
 };
@@ -46,19 +67,29 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_vendor.t($props.postItem.title.substring(0, 3)),
     c: common_vendor.t($props.postItem.description),
     d: $props.postItem.picUrl
-  }, $props.postItem.picUrl ? {
-    e: common_vendor.o(($event) => $setup.previewPic($props.postItem.picUrl)),
-    f: $props.postItem.picUrl
-  } : {}, {
-    g: common_vendor.t(!$props.postItem.classic ? "\u5168\u90E8" : $props.postItem.classic),
-    h: $setup.isLiked ? $setup.noLiked : $setup.liked,
-    i: common_vendor.t($setup.likedNum == 0 ? "" : $setup.likedNum),
-    j: $setup.isLiked ? "#96e8ba" : "#a0a0a0",
-    k: common_vendor.o((...args) => $setup.doLike && $setup.doLike(...args)),
-    l: $props.postItem.name
+  }, $props.postItem.picUrl ? common_vendor.e({
+    e: !Array.isArray($props.postItem.picUrl) ? true : false
+  }, (!Array.isArray($props.postItem.picUrl) ? true : false) ? {
+    f: common_vendor.o(($event) => $setup.previewPic($props.postItem.picUrl)),
+    g: $props.postItem.picUrl
+  } : {
+    h: common_vendor.f($props.postItem.picUrl, (imgItem, index, i0) => {
+      return {
+        a: imgItem.imgUrl,
+        b: index,
+        c: common_vendor.o(($event) => $setup.previewMultiple(index), index)
+      };
+    })
+  }) : {}, {
+    i: common_vendor.t(!$props.postItem.classic ? "\u5168\u90E8" : $props.postItem.classic),
+    j: $setup.isLiked ? $setup.noLiked : $setup.liked,
+    k: common_vendor.t($setup.likedNum == 0 ? "" : $setup.likedNum),
+    l: $setup.isLiked ? "#96e8ba" : "#a0a0a0",
+    m: common_vendor.o((...args) => $setup.doLike && $setup.doLike(...args)),
+    n: $props.postItem.name
   }, $props.postItem.name ? {} : {}, {
-    m: common_vendor.o(($event) => $setup.goToPostDetailPage($props.postItem.id))
+    o: common_vendor.o(($event) => $setup.goToPostDetailPage($props.postItem.id))
   });
 }
-var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/uniappPro/gdutCom/components/post-card/post-card.vue"]]);
+var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-5b36b780"], ["__file", "D:/uniappPro/gdutCom/components/post-card/post-card.vue"]]);
 wx.createComponent(Component);

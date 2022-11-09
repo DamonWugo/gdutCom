@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "体测数据计算",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "phy-grade-card": "../../components/phy-grade-card/phy-grade-card"
+  }
+}
