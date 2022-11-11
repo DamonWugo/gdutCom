@@ -46,9 +46,9 @@ import { computed, reactive } from "vue"
 	.grade-container {
 		display: flex;
 		flex-direction: row;
-		background-color: #6ee6a3;
+		background-color: #96e8ba;
 		justify-content: space-around;
-		padding: 50rpx 0;
+		padding: 70rpx 0;
 		width: 750rpx;
 	}
 

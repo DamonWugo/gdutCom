@@ -3,7 +3,7 @@
 		<view class="top-container">
 			<view class="my-info-container">
 				<text class="nick-name" v-if="isLogined">{{userInfo.userInfo.nickName}}</text>
-				<text class="nick-name" v-else @click="login">未登录</text>
+				<text class="nick-name" v-else @click="login">点击登录</text>
 				<text class="school" v-if="isLogined">广东工业大学龙洞校区</text>
 			</view>
 			<view class="my-avatar-container">
@@ -14,7 +14,7 @@
 		</view>
 		<view class="my-day-center-container" >
 			<view v-if="isLogined">
-				来到黑板的第<text class="day-num">1</text>天
+				来到这里的第<text class="day-num">1</text>天
 			</view>
 			<view v-else @click="login">
 				认证清新账号，体验完整功能 >
@@ -29,6 +29,7 @@
 <script>
     import { onMounted, ref, onBeforeMount, reactive } from "vue"
 	import store from "../../store/index.js"
+	import { randomUserInfo } from '../../global/random-userInfo/random-userInfo.js'
 	export default {
 		setup() {
 			let userInfo = reactive({userInfo:{}})
@@ -45,35 +46,50 @@
 				})
 			}
 			function login() {
-				// 获取code 小程序专有，用户登录凭证。
-				uni.getUserProfile({
-					desc: "获取用户基本资料",
-					success: (res) => {
-						console.log('[]',res)
-						userInfo.userInfo = res.userInfo
-						store.dispatch("loginAbout/savaUserInfo", userInfo.userInfo);
-						uni.setStorageSync('userInfo', JSON.stringify(res.userInfo))//存储登录信息到Storage
-						uni.login({
-							provider : 'weixin',
-							success : (res)=>{
-								console.log('登录',res);
-								isLogined.value=true
-								store.dispatch('loginAbout/changeLoginStatus', true)
-								if(res.errMsg == "login:ok"){
-									let code =res.code;
-								}
-							}
-						})
-					},
-					// 用户取消登录后的提示
-					fail: (res) => {
-						uni.showModal({
-							title: "授权用户信息失败！",
-							// 是否显示取消按钮，默认为 true
-							showCancel: false
-						})
+				let randomNum = Math.ceil(Math.random()*10)
+				userInfo.userInfo =  randomUserInfo[randomNum]
+				store.dispatch("loginAbout/savaUserInfo", userInfo.userInfo);
+				uni.setStorageSync('userInfo', JSON.stringify(userInfo.userInfo))//存储登录信息到Storage
+				uni.login({
+					provider : 'weixin',
+					success : (res)=>{
+						console.log('登录',res);
+						isLogined.value=true
+						store.dispatch('loginAbout/changeLoginStatus', true)
+						if(res.errMsg == "login:ok"){
+							let code =res.code;
+						}
 					}
 				})
+				// // 获取code 小程序专有，用户登录凭证。
+				// uni.getUserInfo({
+				// 	desc: "获取用户基本资料",
+				// 	success: (res) => {
+				// 		console.log('[]',res)
+				// 		userInfo.userInfo = res.userInfo
+				// 		store.dispatch("loginAbout/savaUserInfo", userInfo.userInfo);
+				// 		uni.setStorageSync('userInfo', JSON.stringify(res.userInfo))//存储登录信息到Storage
+				// 		uni.login({
+				// 			provider : 'weixin',
+				// 			success : (res)=>{
+				// 				console.log('登录',res);
+				// 				isLogined.value=true
+				// 				store.dispatch('loginAbout/changeLoginStatus', true)
+				// 				if(res.errMsg == "login:ok"){
+				// 					let code =res.code;
+				// 				}
+				// 			}
+				// 		})
+				// 	},
+				// 	// 用户取消登录后的提示
+				// 	fail: (res) => {
+				// 		uni.showModal({
+				// 			title: "授权用户信息失败！",
+				// 			// 是否显示取消按钮，默认为 true
+				// 			showCancel: false
+				// 		})
+				// 	}
+				// })
 			}
 			return {
 				goUserCenter,

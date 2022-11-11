@@ -6,7 +6,7 @@ const _sfc_main = {
     let isLiked = common_vendor.ref(false);
     let liked = common_vendor.ref("../../static/postIcon/liked.png");
     let noLiked = common_vendor.ref("../../static/postIcon/likel.png");
-    let likedNum = common_vendor.ref(parseInt(Math.random() * 100));
+    let likedNum = common_vendor.ref(parseInt(Math.random() * 1e3));
     common_vendor.onMounted(() => {
       console.log(",2222", props.postItem);
     });
@@ -86,9 +86,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     k: common_vendor.t($setup.likedNum == 0 ? "" : $setup.likedNum),
     l: $setup.isLiked ? "#96e8ba" : "#a0a0a0",
     m: common_vendor.o((...args) => $setup.doLike && $setup.doLike(...args)),
-    n: $props.postItem.name
-  }, $props.postItem.name ? {} : {}, {
-    o: common_vendor.o(($event) => $setup.goToPostDetailPage($props.postItem.id))
+    n: $props.postItem.title1
+  }, $props.postItem.title1 ? {
+    o: common_vendor.t($props.postItem.title)
+  } : {}, {
+    p: common_vendor.o(($event) => $setup.goToPostDetailPage($props.postItem.id))
   });
 }
 var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-5b36b780"], ["__file", "D:/uniappPro/gdutCom/components/post-card/post-card.vue"]]);

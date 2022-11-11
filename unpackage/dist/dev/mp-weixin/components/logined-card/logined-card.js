@@ -1,6 +1,7 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
 var store_index = require("../../store/index.js");
+var global_randomUserInfo_randomUserInfo = require("../../global/random-userInfo/random-userInfo.js");
 const _sfc_main = {
   setup() {
     let userInfo = common_vendor.reactive({ userInfo: {} });
@@ -17,30 +18,19 @@ const _sfc_main = {
       });
     }
     function login() {
-      common_vendor.index.getUserProfile({
-        desc: "\u83B7\u53D6\u7528\u6237\u57FA\u672C\u8D44\u6599",
+      let randomNum = Math.ceil(Math.random() * 10);
+      userInfo.userInfo = global_randomUserInfo_randomUserInfo.randomUserInfo[randomNum];
+      store_index.store.dispatch("loginAbout/savaUserInfo", userInfo.userInfo);
+      common_vendor.index.setStorageSync("userInfo", JSON.stringify(userInfo.userInfo));
+      common_vendor.index.login({
+        provider: "weixin",
         success: (res) => {
-          console.log("[]", res);
-          userInfo.userInfo = res.userInfo;
-          store_index.store.dispatch("loginAbout/savaUserInfo", userInfo.userInfo);
-          common_vendor.index.setStorageSync("userInfo", JSON.stringify(res.userInfo));
-          common_vendor.index.login({
-            provider: "weixin",
-            success: (res2) => {
-              console.log("\u767B\u5F55", res2);
-              isLogined.value = true;
-              store_index.store.dispatch("loginAbout/changeLoginStatus", true);
-              if (res2.errMsg == "login:ok") {
-                res2.code;
-              }
-            }
-          });
-        },
-        fail: (res) => {
-          common_vendor.index.showModal({
-            title: "\u6388\u6743\u7528\u6237\u4FE1\u606F\u5931\u8D25\uFF01",
-            showCancel: false
-          });
+          console.log("\u767B\u5F55", res);
+          isLogined.value = true;
+          store_index.store.dispatch("loginAbout/changeLoginStatus", true);
+          if (res.errMsg == "login:ok") {
+            res.code;
+          }
         }
       });
     }

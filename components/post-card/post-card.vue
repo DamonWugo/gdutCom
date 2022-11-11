@@ -41,13 +41,13 @@
 			</view>
 
 		</view>
-		<view class="post-comment" v-if="postItem.name">
+		<view class="post-comment" v-if="postItem.title1">
 			<view class="post-comment-left">
 				<view class="avatar-container">
 					<image src="../../static/avatar/defultavatar.png" mode="" class="post-comment-avatar"></image>
 				</view>
 				<view class="post-comment-content">
-					我还是的房价还是到付即可士大夫艰苦是否健康
+					{{postItem.title}}
 				</view>
 			</view>
 
@@ -67,7 +67,7 @@ import { onMounted, ref } from "vue"
 			let isLiked = ref(false)
 			let liked = ref('../../static/postIcon/liked.png')
 			let noLiked = ref('../../static/postIcon/likel.png')
-			let likedNum = ref(parseInt(Math.random()*100))
+			let likedNum = ref(parseInt(Math.random()*1000))
 			onMounted(()=>{
 				console.log(',2222',props.postItem);
 			})

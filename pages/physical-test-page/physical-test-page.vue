@@ -1,8 +1,6 @@
 <template>
 	<view class="phy-container">
-		<!-- <view class="ad-container" v-if="isShowAd">
-			<ad unit-id="adunit-41156f2999eeab5c"></ad>
-		</view> -->
+		<ad unit-id="adunit-4687274c74c32def" ad-type="video" ad-theme="white"></ad>
 		<view class="phy-header">
 			<phy-grade-card :bmiScore="bmiScore" :testScore="testScore"></phy-grade-card>
 		</view>
@@ -143,7 +141,7 @@
 		<view class="tips-container">
 			注：此处成绩仅供参考，不作为真实有效成绩 <br/>
 		</view>
-		
+	
 	</view>
 </template>
 

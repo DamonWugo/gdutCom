@@ -9,7 +9,7 @@
 				<text class="time-month">10</text>
 				<text class="time-hour">19:90</text>
 			</view>
-			<view class="my-post-right">
+			<view class="my-post-right" @click="deleteMyPost">
 				···
 			</view>
 		</view>
@@ -37,8 +37,21 @@
 <script>
 	export default {
 		setup(){
+			function deleteMyPost(){
+				uni.showActionSheet({
+					itemList: ['删除此帖'],
+					itemColor: '#ff0004',
+					success: function (res) {
+						console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+					},
+					fail: function (res) {
+						console.log(res.errMsg);
+					}
+				});
+				console.log('1111');
+			}
 			return{
-				
+				deleteMyPost
 			}
 		}
 	}
